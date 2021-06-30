@@ -1,6 +1,7 @@
 local isDriving = false
 local isLoggedIn = false
 local nitrous = 0
+local hasNitrous = false
 local hunger = nil
 local thirst = nil
 local oxygen = 0
@@ -24,8 +25,9 @@ AddEventHandler("QBCore:Client:OnPlayerUnload", function()
 end)
 
 RegisterNetEvent('cosmo_hud:client:UpdateNitrous')
-AddEventHandler('cosmo_hud:client:UpdateNitrous', function(hasNitrous)
-    nitrous = hasNitrous
+AddEventHandler('cosmo_hud:client:UpdateNitrous', function(hasNitrous, level)
+    hasNitrous = hasNitrous
+    nitrous = level
 end)
 
 RegisterNetEvent("hud:client:UpdateNeeds")
@@ -204,11 +206,17 @@ CreateThread(function()
         -- Nitrous
         if Config.ShowNitrous == true then
             if isDriving and IsPedInAnyVehicle(player, true) then
-                if nitrous ~= 0 then
+                if nitrous ~= nil and nitrous > 0 then
                     SendNUIMessage({
                         action = "update_nitrous",
                         nitrous = nitrous,
                         showNitrous = true
+                    })
+                else
+                    SendNUIMessage({
+                        action = "update_nitrous",
+                        nitrous = 0,
+                        showNitrous = false
                     })
                 end
             end

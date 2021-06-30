@@ -215,10 +215,12 @@ window.addEventListener("message", function (event) {
   }
 
   if (data.action == "update_nitrous") {
-    if (data.nitrous == true) {
-      NitrousIndicator.animate(100 / 100);
+    if (data.nitrous > 0) {
+      $("#NitrousCircle").fadeIn();
+      NitrousIndicator.animate(data.nitrous / 100);
       NitrousIndicator.path.setAttribute("stroke", "white");
-    } else if (data.nitrous == false) {
+    } else {
+      $("#NitrousCircle").fadeOut();
       NitrousIndicator.animate(0);
     }
   }
