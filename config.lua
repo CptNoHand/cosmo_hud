@@ -10,6 +10,7 @@ Config.ShowFuel = true -- Show fuel indicator
 Config.ShowNitrous = true -- Show nitrous level
 Config.MinimumStress = 50 -- Change minimum stress amount to shake screen
 Config.MinimumSpeed = 250 -- Change minimum speed that causes stress
+Config.ReloadCommand = true -- set to false if you dont want a reload command
 
 Config.Intensity = { -- Change Screen Shake Intensity Relative To Stress Amount
     ["shake"] = {

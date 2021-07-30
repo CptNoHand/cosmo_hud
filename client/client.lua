@@ -74,34 +74,34 @@ Citizen.CreateThread(function()
             QBCore.Functions.GetPlayerData(function(PlayerData)
                 local player = PlayerPedId()
                 local playerid = PlayerId()
-
+                
                 -- Talking Status
                 local isTalking = NetworkIsPlayerTalking(playerid)
-
+                
                 -- Oxygen/Stamina
-            	if IsEntityInWater(player) then
-                	oxygen = GetPlayerUnderwaterTimeRemaining(playerid) * 10
-            	else
-                	oxygen = 100 - GetPlayerSprintStaminaRemaining(playerid)
-            	end
-
+                if IsEntityInWater(player) then
+                    oxygen = GetPlayerUnderwaterTimeRemaining(playerid) * 10
+                else
+                    oxygen = 100 - GetPlayerSprintStaminaRemaining(playerid)
+                end
+                
                 -- Hunger
                 local hunger = hunger
                 -- Thirst
                 local thirst = thirst
                 -- Stress
                 local stress = PlayerData.metadata["stress"]
-
+                
                 -- Radio
                 if Config.UseRadio then
                     local radioStatus = exports["rp-radio"]:IsRadioOn()
                     SendNUIMessage({radio = radioStatus})
                 end
-
+                
                 -- Voice
                 local voicedata = LocalPlayer.state["proximity"].distance
                 SendNUIMessage({action = "voice_level", voicelevel = voicedata})
-
+                
                 SendNUIMessage({
                     action = "update_hud",
                     hp = GetEntityHealth(player) - 100,
@@ -135,7 +135,7 @@ Citizen.CreateThread(function()
     RequestStreamedTextureDict("circlemap", false)
     while not HasStreamedTextureDictLoaded("circlemap") do Wait(100) end
     AddReplaceTexture("platform:/textures/graphics", "radarmasksm", "circlemap", "radarmasksm")
-
+    
     SetMinimapClipType(1)
     SetMinimapComponentPosition('minimap', 'L', 'B', x, y, w, h)
     SetMinimapComponentPosition('minimap_mask', 'L', 'B', x + 0.17, y + 0.09, 0.072, 0.162)
@@ -159,7 +159,7 @@ CreateThread(function()
         Wait(2000)
         SetRadarZoom(1150)
         local player = PlayerPedId()
-
+        
         if Config.AlwaysShowRadar == false then
             if IsPedInAnyVehicle(player, false) then
                 DisplayRadar(true)
@@ -169,17 +169,17 @@ CreateThread(function()
         elseif Config.AlwaysShowRadar == true then
             DisplayRadar(true)
         end
-
+        
         -- Stress
         if Config.ShowStress == false then
             SendNUIMessage({action = "disable_stress"})
         end
-
+        
         -- Voice
         if Config.ShowVoice == false then
             SendNUIMessage({action = "disable_voice"})
         end
-
+        
         -- Fuel
         if Config.ShowFuel == true then
             if isDriving and IsPedInAnyVehicle(player, true) then
@@ -194,7 +194,7 @@ CreateThread(function()
         elseif Config.ShowFuel == false then
             SendNUIMessage({showFuel = false})
         end
-
+        
         -- Nitrous
         if Config.ShowNitrous == true then
             if isDriving and IsPedInAnyVehicle(player, true) then
@@ -219,5 +219,11 @@ CreateThread(function()
 end)
 
 RegisterCommand("togglehud",
-    function()  SendNUIMessage({action = "toggle_hud"})
+    function()SendNUIMessage({action = "toggle_hud"})
 end, false)
+
+if Config.ReloadCommand == true then
+    RegisterCommand("ui-r", function()
+        isLoggedIn = true
+    end)
+end
