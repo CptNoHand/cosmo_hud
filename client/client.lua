@@ -184,7 +184,7 @@ CreateThread(function()
         if Config.ShowFuel == true then
             if isDriving and IsPedInAnyVehicle(player, true) then
                 local veh = GetVehiclePedIsUsing(player, false)
-                local fuellevel = GetVehicleFuelLevel(veh)
+                local fuellevel = exports["LegacyFuel"]:GetFuel(veh)
                 SendNUIMessage({
                     action = "update_fuel",
                     fuel = fuellevel,
