@@ -60,8 +60,7 @@ Citizen.CreateThread(function()
         if isLoggedIn then
             if Config.ShowSpeedo then
                 if IsPedInAnyVehicle(PlayerPedId(), false) and
-                    not IsPedInFlyingVehicle(PlayerPedId()) and
-                    not IsPedInAnySub(PlayerPedId()) then
+                    not IsPedOnAnyBike(PlayerPedId()) then
                     isDriving = true
                     SendNUIMessage({showSpeedo = true})
                 elseif not IsPedInAnyVehicle(PlayerPedId(), false) then
